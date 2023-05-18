@@ -28,9 +28,10 @@ export default {
   flex-wrap: wrap;
   width: 100vw;
   padding: 0;
+  justify-content: center;
   li {
     list-style: none;
-    width: calc(50% - 20px);
+    width: 100%;
     height: 200px;
     border-radius: 20px;
     background-color: #f5edff;
@@ -38,6 +39,16 @@ export default {
     justify-content: center;
     align-items: center;
     margin: 5px;
+    @media (min-width: 600px) {
+      width: calc(50% - 20px);
+    }
+    @media (min-width: 1200px) {
+      width: calc(33% - 20px);
+    }
+  }
+}
+</style>
+
   }
 }
 </style>
