@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <ul v-if="filtered.length">
+      <li v-for="user in filtered">{{user.first_name}} {{user.last_name}}, {{user.country}}</li>
+    </ul>
   </div>
 </template>
 
@@ -7,13 +10,12 @@
 export default {
   async asyncData({$axios}) {
     const filtered = await $axios.$get('/api/records.php');
-    console.log('filtered',filtered);
     return { filtered }
   }
 }
 </script>
 
-<style>
+<style lang="scss">
 /* Sample `apply` at-rules with Tailwind CSS
 .container {
 @apply min-h-screen flex justify-center items-center text-center mx-auto;
