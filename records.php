@@ -17,9 +17,6 @@ if ($mysqli->connect_error) {
 	echo 'Error: ' . $mysqli->connect_error;
 	exit();
 }
-//   $sql = file_get_contents('MOCK_DATA.sql');
-//   $mysqli->multi_query($sql);
-//   $records = $mysqli->query("SELECT * FROM MOCK_DATA");
 $q = "SELECT * FROM MOCK_DATA";
 $records = $mysqli->query($q);
 $filtered = [];
@@ -30,11 +27,17 @@ $countries = [
 	'Germany',
 	'Israel'
 ];
-while ($row = $records->fetch_assoc()) {
-	if (!in_array($row["country"], $countries)) {
-		// printf("%s (%s)\n", $row["first_name"], $row["country"]);
-		$filtered[] = $row;
+if ($records->num_rows > 0) {
+	while ($row = $records->fetch_assoc()) {
+		if (!in_array($row["country"], $countries)) {
+			// printf("%s (%s)\n", $row["first_name"], $row["country"]);
+			$filtered[] = $row;
+		}
 	}
+	echo json_encode($filtered);
+} else {
+	  $sql = file_get_contents('MOCK_DATA.sql');
+	  $mysqli->multi_query($sql);
+	  $records = $mysqli->query("SELECT * FROM MOCK_DATA");
 }
-echo json_encode($filtered);
 $mysqli->close();
