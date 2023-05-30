@@ -9,6 +9,9 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    colors: {
+      purple: '#f5edff'
+    },
   },
   plugins: [],
 }

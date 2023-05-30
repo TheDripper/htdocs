@@ -1,8 +1,12 @@
 <template>
   <div>
     <ul class="filter_results flex flex-wrap w-full" v-if="filtered.length">
-      <li v-for="user in filtered" class="border-rounded-xl w-full md:w-1/2 lg:w-1/3">
-        {{ user.first_name }} {{ user.last_name }}, {{ user.country }}
+      <li v-for="user in filtered" class="p-4 w-full md:w-1/2 lg:w-1/3">
+        <div class="rounded-xl bg-purple p-4">
+          <p>{{ user.last_name }} {{ user.first_name }}</p>
+          <p>{{ user.email }}</p>
+          <p>{{ user.country }}</p>
+        </div>
       </li>
     </ul>
   </div>
