@@ -1,9 +1,9 @@
 <template>
   <div>
-    <ul class="filter_results flex flex-wrap w-full" v-if="filtered.length">
-      <li v-for="user in filtered" class="p-4 w-full md:w-1/2 lg:w-1/3">
+    <ul class="filter_results flex flex-wrap w-full" v-if="users.length">
+      <li v-for="user in users" class="p-4 w-full md:w-1/2 lg:w-1/3">
         <div class="rounded-xl bg-purple p-4">
-          <p>{{ user.last_name }} {{ user.first_name }}</p>
+          <p>{{ user.last_name }}, {{ user.first_name }}</p>
           <p>{{ user.email }}</p>
           <p>{{ user.country }}</p>
         </div>
@@ -13,11 +13,19 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
-  async asyncData({ $axios }) {
-    const filtered = await $axios.$get("/api/records.php");
-    return { filtered };
+
+  // sync asyncData({ $axios }) {
+  //   const allUsers = await $axios.$get("/api/users.php");
+  //   return { allUsers };
+  // },
+  computed: {
+    ...mapGetters(['users'])
   },
+  methods: {
+    ...mapActions(['setUsers'])
+  }
 };
 </script>
 
