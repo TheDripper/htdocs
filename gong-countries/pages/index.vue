@@ -3,12 +3,12 @@
     <div id="filter" class="w-1/5 mt-4 p-2 pr-4 border-2 border-dark rounded-full"  @click="toggleFilter"><p>All Locations</p></div>
       <div class="relative w-1/5 h-10">
       <ul class="w-full absolute z-10 left-0 bg-white mt-4 p-2 pr-4 border-2 border-dark rounded-xl" :class="{closed: isClosed}">
-        <li><input class="mr-2" type="checkbox" value="default">All Locations</input></li>
-        <li><input class="mr-2" type="checkbox" value="United States">United States</input></li>
-        <li><input class="mr-2" type="checkbox" value="Japan">Japan</input></li>
-        <li><input class="mr-2" type="checkbox" value="France">France</input></li>
-        <li><input class="mr-2" type="checkbox" value="Germany">Germany</input></li>
-        <li><input class="mr-2" type="checkbox" value="Israel">Israel</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="all">All Locations</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="United States">United States</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="Japan">Japan</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="France">France</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="Germany">Germany</input></li>
+        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="Israel">Israel</input></li>
       </ul>
       </div>
     <ul class="filter_results flex flex-wrap w-full" v-if="users.length">
@@ -25,6 +25,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import $ from "jquery";
 export default {
   // sync asyncData({ $axios }) {
   //   const allUsers = await $axios.$get("/api/users.php");
@@ -39,10 +40,20 @@ export default {
     ...mapGetters(["users"]),
   },
   methods: {
+    async filterUsers() {
+      let countries = [];
+      $(".country").each(function (e) {
+        countries.push(this.value);
+      });
+      let filtered = await this.$axios.$get("/api/users.php", {
+        params: { countries: countries },
+      });
+      this.updateUsers(filtered);
+    },
     toggleFilter() {
       this.isClosed = !this.isClosed;
     },
-    ...mapActions(["setUsers"]),
+    ...mapActions(["updateUsers"]),
   },
 };
 </script>
