@@ -1,5 +1,16 @@
 <template>
-  <div>
+  <div class="flex flex-col items-center">
+    <div id="filter" class="w-1/5 mt-4 p-2 pr-4 border-2 border-dark rounded-full"  @click="toggleFilter"><p>All Locations</p></div>
+      <div class="relative w-1/5 h-10">
+      <ul class="w-full absolute z-10 left-0 bg-white mt-4 p-2 pr-4 border-2 border-dark rounded-xl" :class="{closed: isClosed}">
+        <li><input class="mr-2" type="checkbox" value="default">All Locations</input></li>
+        <li><input class="mr-2" type="checkbox" value="United States">United States</input></li>
+        <li><input class="mr-2" type="checkbox" value="Japan">Japan</input></li>
+        <li><input class="mr-2" type="checkbox" value="France">France</input></li>
+        <li><input class="mr-2" type="checkbox" value="Germany">Germany</input></li>
+        <li><input class="mr-2" type="checkbox" value="Israel">Israel</input></li>
+      </ul>
+      </div>
     <ul class="filter_results flex flex-wrap w-full" v-if="users.length">
       <li v-for="user in users" class="p-4 w-full md:w-1/2 lg:w-1/3">
         <div class="rounded-xl bg-purple p-4">
@@ -13,19 +24,26 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from "vuex";
 export default {
-
   // sync asyncData({ $axios }) {
   //   const allUsers = await $axios.$get("/api/users.php");
   //   return { allUsers };
   // },
+  data() {
+    return {
+      isClosed: true,
+    };
+  },
   computed: {
-    ...mapGetters(['users'])
+    ...mapGetters(["users"]),
   },
   methods: {
-    ...mapActions(['setUsers'])
-  }
+    toggleFilter() {
+      this.isClosed = !this.isClosed;
+    },
+    ...mapActions(["setUsers"]),
+  },
 };
 </script>
 
@@ -35,6 +53,11 @@ export default {
 @apply min-h-screen flex justify-center items-center text-center mx-auto;
 }
 */
+#filter {
+}
+.closed {
+  @apply hidden;
+}
 // .filter_results {
 //   display: flex;
 //   flex-wrap: wrap;
