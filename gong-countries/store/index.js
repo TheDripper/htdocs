@@ -15,9 +15,14 @@ export const mutations = {
 };
 
 export const actions = {
-  async updateUsers({ state }, countries) {
-    const users = await this.$axios.$get("/api/filter.php");
-    commit('setUsers',users);
+  async updateUsers({ commit }, countries) {
+    console.log('countries',countries);
+    let users = await this.$axios.$get("/api/users.php", {
+      params: { countries: countries },
+    });
+    console.log('users',users);
+    // JSON.parse(users);
+    commit("setUsers", users);
   },
   async nuxtServerInit({ commit }) {
     const users = await this.$axios.$get("/api/default.php");

@@ -12,7 +12,7 @@
       </ul>
       </div>
     <ul class="filter_results flex flex-wrap w-full" v-if="users.length">
-      <li v-for="user in users" class="p-4 w-full md:w-1/2 lg:w-1/3">
+      <li v-for="user in this.users" class="p-4 w-full md:w-1/2 lg:w-1/3">
         <div class="rounded-xl bg-purple p-4">
           <p>{{ user.last_name }}, {{ user.first_name }}</p>
           <p>{{ user.email }}</p>
@@ -43,12 +43,14 @@ export default {
     async filterUsers() {
       let countries = [];
       $(".country").each(function (e) {
-        countries.push(this.value);
+        if (this.checked) {
+          countries.push(this.value);
+        }
       });
-      let filtered = await this.$axios.$get("/api/users.php", {
-        params: { countries: countries },
-      });
-      this.updateUsers(filtered);
+      // let filtered = await this.$axios.$get("/api/users.php", {
+      //   params: { countries: countries },
+      // });
+      this.updateUsers(countries);
     },
     toggleFilter() {
       this.isClosed = !this.isClosed;
