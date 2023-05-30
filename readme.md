@@ -1,5 +1,5 @@
 # Running the app
-Serve the root directory of this git in MAMP/WAMP on any port other than 3000.
+Serve the root directory of this git in MAMP/WAMP on default settings, (localhost:8888, localhost:8889 for SQL)
 
 ## In Terminal
 ```
