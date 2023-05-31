@@ -3,7 +3,7 @@
     <div id="filter" class="w-1/5 mt-4 p-2 pr-4 border-2 border-dark rounded-full"  @click="toggleFilter"><p>All Locations</p></div>
       <div class="relative w-1/5 h-10">
       <ul class="w-full absolute z-10 left-0 bg-white mt-4 p-2 pr-4 border-2 border-dark rounded-xl" :class="{closed: isClosed}">
-        <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="all">All Locations</input></li>
+        <li><input id="all" @change="filterUsers" class="mr-2 country" type="checkbox" value="all">All Locations</input></li>
         <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="United States">United States</input></li>
         <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="Japan">Japan</input></li>
         <li><input @change="filterUsers" class="mr-2 country" type="checkbox" value="France">France</input></li>
@@ -40,8 +40,13 @@ export default {
     ...mapGetters(["users"]),
   },
   methods: {
-    async filterUsers() {
+    async filterUsers(e) {
       let countries = [];
+      if (e.target.id == "all") {
+        $(".country").each(function (e) {
+          this.checked = true;
+        });
+      }
       $(".country").each(function (e) {
         if (this.checked) {
           countries.push(this.value);

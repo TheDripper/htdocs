@@ -29,9 +29,6 @@ if ($records->num_rows > 0) {
 		}
 	}
 	echo json_encode($filtered);
-} else {
-	  $sql = file_get_contents('MOCK_DATA.sql');
-	  $mysqli->multi_query($sql);
-	  $records = $mysqli->query("SELECT * FROM MOCK_DATA");
 }
+
 $mysqli->close();
